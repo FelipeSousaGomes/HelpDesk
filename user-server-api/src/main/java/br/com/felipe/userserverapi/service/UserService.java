@@ -6,6 +6,7 @@ import br.com.felipe.userserverapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import models.exceptions.ResourceNotFoundException;
+import models.request.CreateUserRequest;
 import models.responses.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,12 @@ public class UserService {
                         UserResponse.class.getSimpleName())) );
        // return userRepository.findById(id).orElse(null)
     }
+
+    public void save(CreateUserRequest createUserRequest) {
+            userRepository.save(userMapper.fromRequest(createUserRequest));
+
+    }
+
 
 
 
