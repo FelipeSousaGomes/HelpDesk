@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import models.exceptions.StandardError;
 import models.request.CreateUserRequest;
 import models.responses.UserResponse;
@@ -43,6 +44,8 @@ public interface UserController {
             @PathVariable(name = "id") final String id);
 
 
+
+    @PostMapping
 @Operation (summary = "Save new User")
 @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "User created"),
@@ -55,9 +58,8 @@ public interface UserController {
                 content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class))
         )
 })
-    @PostMapping
     ResponseEntity<Void> save(
-            @RequestBody final CreateUserRequest createUserRequest
+           @Valid @RequestBody final CreateUserRequest createUserRequest
     );
 
 }

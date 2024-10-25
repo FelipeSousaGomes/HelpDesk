@@ -4,6 +4,7 @@ import br.com.felipe.userserverapi.controller.UserController;
 import br.com.felipe.userserverapi.entity.User;
 import br.com.felipe.userserverapi.repository.UserRepository;
 import br.com.felipe.userserverapi.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import models.request.CreateUserRequest;
 import models.responses.UserResponse;
@@ -26,7 +27,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<Void> save(CreateUserRequest createUserRequest) {
+    public ResponseEntity<Void> save( @Valid  CreateUserRequest createUserRequest) {
         userService.save(createUserRequest);
         return ResponseEntity.status(CREATED.value()).build();
     }
