@@ -13,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.lang.module.ResolutionException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,8 +45,8 @@ public class UserService {
     }
 
 
+    public List<UserResponse> findAll() {
+return  userRepository.findAll().stream().map(x -> userMapper.fromEntity(x)).toList();
 
-
-
-
+    }
 }
