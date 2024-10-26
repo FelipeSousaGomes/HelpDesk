@@ -2,11 +2,9 @@ package br.com.felipe.userserverapi.mapper;
 
 import br.com.felipe.userserverapi.entity.User;
 import models.request.CreateUserRequest;
+import models.request.UpdateUserRequest;
 import models.responses.UserResponse;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 @Mapper(
         componentModel = "spring",
@@ -19,4 +17,7 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
     User fromRequest(CreateUserRequest createUserRequest);
+
+    @Mapping(target = "id", ignore = true)
+    User update(UpdateUserRequest updateUserRequest, @MappingTarget User entity);
 }

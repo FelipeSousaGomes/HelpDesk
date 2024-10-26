@@ -7,6 +7,7 @@ import br.com.felipe.userserverapi.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import models.request.CreateUserRequest;
+import models.request.UpdateUserRequest;
 import models.responses.UserResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,11 @@ public class UserControllerImpl implements UserController {
     @Override
     public ResponseEntity<List<UserResponse>> findAll() {
         return ResponseEntity.ok().body(userService.findAll());
+    }
+
+    @Override
+    public ResponseEntity<UserResponse> update(final String id, final UpdateUserRequest updateUserRequest) {
+
+        return ResponseEntity.ok().body(userService.update(id, updateUserRequest));
     }
 }
