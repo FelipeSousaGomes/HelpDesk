@@ -11,6 +11,7 @@ import models.request.UpdateUserRequest;
 import models.responses.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.module.ResolutionException;
@@ -22,6 +23,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserResponse findById(final String id) {
         return userMapper.fromEntity(
@@ -31,7 +33,8 @@ public class UserService {
 
     public void save(CreateUserRequest createUserRequest) {
                 verifyIfEmailAlreadyExists(createUserRequest.email(), null);
-            userRepository.save(userMapper.fromRequest(createUserRequest));
+            userRepository.save(userMapper.fromRequest(createUserRequest)
+                    .withPassword(bCryptPasswordEncoder.encode(createUserRequest.password())));
 
     }
 
@@ -47,7 +50,13 @@ public class UserService {
     public UserResponse update(final String id,final  UpdateUserRequest updateUserRequest) {
             User entity = find(id);
             verifyIfEmailAlreadyExists(updateUserRequest.email(),id);
-            return userMapper.fromEntity(userRepository.save(userMapper.update(updateUserRequest, entity)));
+            return userMapper.fromEntity(userRepository.save(userMapper.update(updateUserRequest, entity)
+                            .withPassword(updateUserRequest.password() != null ? bCryptPasswordEncoder.encode(updateUserRequest.password())
+                                  : entity.getPassword()
+                                    )
+                    )
+
+            );
 
     }
 
