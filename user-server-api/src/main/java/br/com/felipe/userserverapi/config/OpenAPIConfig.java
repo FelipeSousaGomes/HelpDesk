@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Configuration;
 public class OpenAPIConfig {
     @Bean
     public OpenAPI customOpenAPI(
-            @Value("${spring.data.mongodb.springdoc.openapi.title}") final String title,
-            @Value("${spring.data.mongodb.springdoc.openapi.description}") final String description,
-            @Value("${spring.data.mongodb.springdoc.openapi.version}") final String version
+            @Value("${springdoc.openapi.title}") final String title,
+            @Value("${springdoc.openapi.description}") final String description,
+            @Value("${springdoc.openapi.version}") final String version
     ){
         return new OpenAPI()
                 .info(

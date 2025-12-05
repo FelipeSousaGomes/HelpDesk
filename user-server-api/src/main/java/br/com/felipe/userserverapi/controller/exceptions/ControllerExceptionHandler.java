@@ -22,21 +22,21 @@ import static org.springframework.http.HttpStatus.*;
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    ResponseEntity<StandardError> resourceNotFound(final ResourceNotFoundException ex, final HttpServletRequest request){
+    ResponseEntity<StandardError> resourceNotFound(final ResourceNotFoundException ex, final HttpServletRequest request) {
         return ResponseEntity.status(
                 NOT_FOUND).body(
-                        StandardError.builder().timestamp(Instant.now())
-                                .status(NOT_FOUND.value())
-                                .error(NOT_FOUND.getReasonPhrase())
-                                .message(ex.getMessage())
-                                .path(request.getRequestURI())
-                                .build()
+                StandardError.builder().timestamp(Instant.now())
+                        .status(NOT_FOUND.value())
+                        .error(NOT_FOUND.getReasonPhrase())
+                        .message(ex.getMessage())
+                        .path(request.getRequestURI())
+                        .build()
 
         );
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<ValidationException> resourceNotFoundException(final MethodArgumentNotValidException ex, final HttpServletRequest request){
+    ResponseEntity<ValidationException> resourceNotFoundException(final MethodArgumentNotValidException ex, final HttpServletRequest request) {
         var error = ValidationException.builder()
                 .timestamp(Instant.now())
                 .status(BAD_REQUEST.value())
@@ -46,13 +46,12 @@ public class ControllerExceptionHandler {
                 .errors(new ArrayList<>())
                 .build();
 
-        for(FieldError fieldError: ex.getBindingResult().getFieldErrors()){
-            error.addError(fieldError.getField(),fieldError.getDefaultMessage());
+        for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
+            error.addError(fieldError.getField(), fieldError.getDefaultMessage());
         }
 
         return ResponseEntity.badRequest().body(error);
     }
-
 
 
     @ExceptionHandler(DataIntegrityViolationException.class)

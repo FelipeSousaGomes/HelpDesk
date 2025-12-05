@@ -21,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
+
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -28,41 +29,39 @@ public class UserService {
     public UserResponse findById(final String id) {
         return userMapper.fromEntity(
                 find(id));
-       // return userRepository.findById(id).orElse(null)
+        // return userRepository.findById(id).orElse(null)
     }
 
     public void save(CreateUserRequest createUserRequest) {
-                verifyIfEmailAlreadyExists(createUserRequest.email(), null);
-            userRepository.save(userMapper.fromRequest(createUserRequest)
-                    .withPassword(bCryptPasswordEncoder.encode(createUserRequest.password())));
+        verifyIfEmailAlreadyExists(createUserRequest.email(), null);
+        userRepository.save(userMapper.fromRequest(createUserRequest)
+                .withPassword(bCryptPasswordEncoder.encode(createUserRequest.password())));
 
     }
 
 
     public List<UserResponse> findAll() {
-        return  userRepository.findAll().stream().map(x -> userMapper.fromEntity(x)).toList();
-
-
+        return userRepository.findAll().stream().map(x -> userMapper.fromEntity(x)).toList();
 
 
     }
 
-    public UserResponse update(final String id,final  UpdateUserRequest updateUserRequest) {
-            User entity = find(id);
-            verifyIfEmailAlreadyExists(updateUserRequest.email(),id);
-            return userMapper.fromEntity(userRepository.save(userMapper.update(updateUserRequest, entity)
-                            .withPassword(updateUserRequest.password() != null ? bCryptPasswordEncoder.encode(updateUserRequest.password())
-                                  : entity.getPassword()
-                                    )
-                    )
+    public UserResponse update(final String id, final UpdateUserRequest updateUserRequest) {
+        User entity = find(id);
+        verifyIfEmailAlreadyExists(updateUserRequest.email(), id);
+        return userMapper.fromEntity(userRepository.save(userMapper.update(updateUserRequest, entity)
+                        .withPassword(updateUserRequest.password() != null ? bCryptPasswordEncoder.encode(updateUserRequest.password())
+                                : entity.getPassword()
+                        )
+                )
 
-            );
+        );
 
     }
 
-    private User find(final String id){
+    private User find(final String id) {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Object não encontrado id: " + id + ", Type " +
-                UserResponse.class.getSimpleName())) ;
+                UserResponse.class.getSimpleName()));
     }
 
     private void verifyIfEmailAlreadyExists(final String email, final String id) {
@@ -72,7 +71,6 @@ public class UserService {
                     throw new DataIntegrityViolationException("Email [ " + email + " ] already exists");
                 });
     }
-
 
 
 }
