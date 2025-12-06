@@ -5,13 +5,13 @@ import models.exceptions.ResourceNotFoundException;
 import models.exceptions.StandardError;
 import models.exceptions.ValidationException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.client.HttpClientErrorException;
+
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class ControllerExceptionHandler {
 
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    ResponseEntity<StandardError> resourceNotFound(final DataIntegrityViolationException ex, final HttpServletRequest request) {
+    ResponseEntity<StandardError> dataIntegrityViolationException(final DataIntegrityViolationException ex, final HttpServletRequest request) {
         return ResponseEntity.status(CONFLICT).body(
                 StandardError.builder().timestamp(Instant.now())
                         .status(CONFLICT.value())
