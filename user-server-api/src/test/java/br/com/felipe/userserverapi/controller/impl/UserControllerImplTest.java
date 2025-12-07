@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static br.com.felipe.userserverapi.creator.CreatorUtils.generatedMock;
 
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,5 +46,16 @@ class UserControllerImplTest {
         userRepository.deleteById(userId);
     }
 
+    @Test
+    void testFindByIdWithNotFound() throws Exception {
+
+        mockMvc.perform(get("/api/users/{id}", "1"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Object não encontrado id: 1, Type UserResponse"))
+                .andExpect(jsonPath("$.error").value(NOT_FOUND.getReasonPhrase()))
+                .andExpect(jsonPath("$.path").value("/api/users/1"))
+                .andExpect(jsonPath("$.status").value(NOT_FOUND.value()))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
+    }
 
 }
