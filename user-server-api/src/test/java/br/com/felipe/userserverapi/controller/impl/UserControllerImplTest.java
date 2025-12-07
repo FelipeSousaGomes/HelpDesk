@@ -2,11 +2,14 @@ package br.com.felipe.userserverapi.controller.impl;
 
 import br.com.felipe.userserverapi.entity.User;
 import br.com.felipe.userserverapi.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import models.request.CreateUserRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -17,8 +20,10 @@ import static br.com.felipe.userserverapi.creator.CreatorUtils.generatedMock;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,6 +35,8 @@ class UserControllerImplTest {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ObjectMapper objectMapper;
 
 
     @Test
@@ -78,5 +85,21 @@ class UserControllerImplTest {
 
 
   }
+
+
+  @Test
+    void testSaveWithSuccess() throws Exception {
+     final var request = generatedMock(CreateUserRequest.class).withEmail("email@email.com");
+
+     mockMvc.perform(post("/api/users").
+             contentType(APPLICATION_JSON_VALUE)
+                     .content(objectMapper.writeValueAsString(request))
+             ).andExpect(status().isCreated());
+
+  userRepository.deleteByEmail("email@email.com");
+
+    }
+
+
 
 }
