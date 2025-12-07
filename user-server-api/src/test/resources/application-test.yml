@@ -1,0 +1,5 @@
+data:
+    mongodb:
+      uri: 'mongodb+srv://helpdesk:helpdesk@clusterhelpdesk.5lanvpo.mongodb.net/helpdesk?appName=ClusterHelpDesk'
+      auto-index-creation: true
+
