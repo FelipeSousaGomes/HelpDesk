@@ -29,7 +29,7 @@ public interface AuthController {
     @PostMapping("/login")
     ResponseEntity<AuthenticateResponse> authenticate(
             @RequestBody AuthenticateRequest request
-    );
+    ) throws Exception;
 
 
 }

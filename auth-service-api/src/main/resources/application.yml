@@ -1,4 +1,10 @@
 spring:
   application:
-    name: 'user-service-api'
+    name: 'auth-service-api'
+  data:
+    mongodb:
+     uri: 'mongodb+srv://helpdesk:helpdesk@clusterhelpdesk.5lanvpo.mongodb.net/helpdesk?appName=ClusterHelpDesk'
 
+jwt:
+  secret: 'u9J5pZQ8K3vWnR7E0cL2FhTqM6dSxA1YkB9P4NwH8rZJ5E7QmC0XKpDVaF2S6L1A'
+  expiration: 120000
