@@ -1,5 +1,6 @@
-package br.com.felipe.authserviceapi.security.dtos;
+package br.com.felipe.authserviceapi.security;
 
+import br.com.felipe.authserviceapi.security.dtos.UserDetailsDTO;
 import br.com.felipe.authserviceapi.utils.JWTUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -35,8 +36,8 @@ public class JWTAuthenticationImpl {
         log.info("Successfully authenticated user: {}", userDetails.getUsername());
         final var token = jwtUtils.generateToken(userDetails);
         return AuthenticateResponse.builder()
-                .type("JWT")
-                .token("Bearer " + token)
+                .type("Bearer")
+                .token(token)
                 .build();
     }
 }

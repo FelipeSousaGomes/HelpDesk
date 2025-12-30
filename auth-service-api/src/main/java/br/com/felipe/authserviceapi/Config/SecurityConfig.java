@@ -16,7 +16,9 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/swagger-ui.html",
             "/swagger-resources/**",
-            "/webjars/**"
+            "/webjars/**",
+            "/api/auth/**"
+
     };
 
     @Bean
@@ -25,7 +27,6 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->

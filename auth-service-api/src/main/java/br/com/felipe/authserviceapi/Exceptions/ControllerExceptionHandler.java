@@ -1,5 +1,6 @@
 package br.com.felipe.authserviceapi.Exceptions;
 import jakarta.servlet.http.HttpServletRequest;
+import models.exceptions.RefreshTokenExpired;
 import models.exceptions.ResourceNotFoundException;
 import models.exceptions.StandardError;
 import models.exceptions.ValidationException;
@@ -55,5 +56,20 @@ public class ControllerExceptionHandler {
         }
 
         return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(RefreshTokenExpired.class)
+    ResponseEntity<StandardError> handleRefreshTokenExpired(
+            final RefreshTokenExpired ex, final HttpServletRequest request
+    ) {
+        return ResponseEntity.status(UNAUTHORIZED).body(
+                StandardError.builder()
+                        .timestamp(Instant.now())
+                        .status(UNAUTHORIZED.value())
+                        .error(UNAUTHORIZED.getReasonPhrase())
+                        .message(ex.getMessage())
+                        .path(request.getRequestURI())
+                        .build()
+        );
     }
 }
