@@ -5,7 +5,7 @@ repositories {
 }
 
 ext {
-    set('springCloudVersion', "2023.0.1")
+    set('springCloudVersion', "2023.0.3")
 }
 
 dependencies {
@@ -21,17 +21,17 @@ dependencies {
 //        because('Starter para integração com o RabbitMQ')
 //    }
 
-//    implementation('org.springframework.cloud:spring-cloud-starter-config') {
-//        because('Starter para configuração do Spring Cloud Config')
-//    }
+    implementation('org.springframework.cloud:spring-cloud-starter-config') {
+        because('Starter para configuração do Spring Cloud Config')
+    }
 
 //    implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client') {
 //        because('Starter para integração com o Eureka Discovery Client')
 //    }
 //
-//    implementation('org.springframework.cloud:spring-cloud-starter-bootstrap') {
-//        because('Starter para configuração do Spring Cloud Config')
-//    }
+    implementation('org.springframework.cloud:spring-cloud-starter-bootstrap') {
+        because('Starter para configuração do Spring Cloud Config')
+    }
 
     implementation('org.springframework.boot:spring-boot-starter-data-jpa') {
         because('Starter para integração com o Spring Data JPA')
@@ -45,7 +45,7 @@ dependencies {
         because('Starter para validação de dados com o Spring Validation')
     }
 
-    implementation('mysql:mysql-connector-java:8.0.32') {
+    implementation('com.mysql:mysql-connector-j:8.0.33') {
         because('Driver JDBC para conexão com o MySQL')
     }
 
