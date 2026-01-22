@@ -21,7 +21,7 @@ import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
-@Tag(name = "UserController", description = "Controller responsible dor user operations")
+@Tag(name = "UserController", description = "Controller responsible for user operations")
 @RequestMapping("/api/users")
 public interface UserController {
 
