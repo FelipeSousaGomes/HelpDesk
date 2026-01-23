@@ -4,6 +4,7 @@ import br.com.felipe.oderserviceapi.entities.Order;
 import models.request.CreateOrderRequest;
 import models.request.UpdateOrderRequest;
 import models.responses.OrderResponse;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface OrderService {
     void deleteById(Long id);
 
     List<Order> findAll();
+
+    Page<Order> findAllPaginated(Integer page, Integer linesPerPage, String direction, String orderBy);
 }

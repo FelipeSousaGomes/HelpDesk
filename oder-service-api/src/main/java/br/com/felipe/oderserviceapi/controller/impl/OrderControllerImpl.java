@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import models.request.CreateOrderRequest;
 import models.request.UpdateOrderRequest;
 import models.responses.OrderResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,5 +47,12 @@ public class OrderControllerImpl implements OrderController {
     @Override
     public ResponseEntity<List<OrderResponse>> findAll() {
         return ResponseEntity.ok(mapper.fromEntities(service.findAll()));
+    }
+
+    @Override
+    public ResponseEntity<Page<OrderResponse>> findAllPaginated(Integer page, Integer linesPerPage, String direction, String orderBy) {
+        return ResponseEntity.ok().body(
+                service.findAllPaginated(page, linesPerPage, direction, orderBy
+        ).map(mapper::fromEntity));
     }
 }
