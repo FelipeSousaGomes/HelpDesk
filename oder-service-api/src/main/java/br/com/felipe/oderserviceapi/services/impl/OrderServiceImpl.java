@@ -1,10 +1,12 @@
 package br.com.felipe.oderserviceapi.services.impl;
 
+import br.com.felipe.oderserviceapi.clients.UserServiceFeingClient;
 import br.com.felipe.oderserviceapi.entities.Order;
 import br.com.felipe.oderserviceapi.mapper.OrderMapper;
 import br.com.felipe.oderserviceapi.repositories.OrderRepository;
 import br.com.felipe.oderserviceapi.services.OrderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import models.enums.OrderStatusEnum;
 import models.exceptions.ResourceNotFoundException;
 import models.request.CreateOrderRequest;
@@ -19,12 +21,14 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderMapper mapper;
+    private final UserServiceFeingClient userServiceFeingClient;
 
     @Override
     public Order findById(Long id) {
@@ -33,8 +37,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void save(CreateOrderRequest request) {
+        validateUserId(request.requesterId());
 
-        orderRepository.save(mapper.fromRequest(request));
+        final var entity = orderRepository.save(mapper.fromRequest(request));
+        log.info("Order: {}", entity);
     }
 
     @Override
@@ -72,6 +78,12 @@ public class OrderServiceImpl implements OrderService {
         );
 
         return orderRepository.findAll(pageRequest);
+    }
+
+
+    void validateUserId(final String userId){
+        final var user = userServiceFeingClient.findById(userId).getBody();
+        log.info("User: {}", user);
     }
 
 
