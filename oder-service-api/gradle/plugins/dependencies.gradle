@@ -54,9 +54,9 @@ dependencies {
         because('Lib para compartilhar código comum entre os projetos')
     }
 
-//    implementation('org.springframework.cloud:spring-cloud-starter-openfeign') {
-//        because('Starter para integração com o Spring Cloud OpenFeign')
-//    }
+   implementation('org.springframework.cloud:spring-cloud-starter-openfeign') {
+       because('Starter para integração com o Spring Cloud OpenFeign')
+   }
 
     compileOnly('com.h2database:h2') {
         because('Banco de dados H2 para testes em memória')
