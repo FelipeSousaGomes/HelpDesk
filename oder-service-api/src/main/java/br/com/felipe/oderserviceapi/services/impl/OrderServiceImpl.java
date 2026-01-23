@@ -13,6 +13,7 @@ import models.request.CreateOrderRequest;
 
 import models.request.UpdateOrderRequest;
 import models.responses.OrderResponse;
+import models.responses.UserResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -37,7 +38,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void save(CreateOrderRequest request) {
-        validateUserId(request.requesterId());
+     final var requester=  validateUserId(request.requesterId());
+     final var customer=  validateUserId(request.customerId());
+
+     log.info("Requester: {}", requester);
+     log.info("Customer: {}", customer);
 
         final var entity = orderRepository.save(mapper.fromRequest(request));
         log.info("Order: {}", entity);
@@ -81,9 +86,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    void validateUserId(final String userId){
-        final var user = userServiceFeingClient.findById(userId).getBody();
-        log.info("User: {}", user);
+    UserResponse validateUserId(final String userId){
+       return userServiceFeingClient.findById(userId).getBody();
     }
 
 
