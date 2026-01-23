@@ -9,6 +9,7 @@ import models.responses.OrderResponse;
 import org.mapstruct.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Mapper(
         componentModel = "spring",
@@ -39,4 +40,6 @@ public interface OrderMapper {
     }
 
     OrderResponse fromEntity(Order entity);
+
+    List<OrderResponse> fromEntities(List<Order> orders);
 }

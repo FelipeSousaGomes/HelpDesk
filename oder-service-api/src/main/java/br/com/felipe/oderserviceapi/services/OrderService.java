@@ -5,6 +5,8 @@ import models.request.CreateOrderRequest;
 import models.request.UpdateOrderRequest;
 import models.responses.OrderResponse;
 
+import java.util.List;
+
 public interface OrderService {
 
     Order findById(Long id);
@@ -14,4 +16,6 @@ public interface OrderService {
     OrderResponse update(Long id, UpdateOrderRequest request);
 
     void deleteById(Long id);
+
+    List<Order> findAll();
 }
