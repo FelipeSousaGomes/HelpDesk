@@ -4,6 +4,8 @@ import br.com.felipe.oderserviceapi.controller.OrderController;
 import br.com.felipe.oderserviceapi.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import models.request.CreateOrderRequest;
+import models.request.UpdateOrderRequest;
+import models.responses.OrderResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,5 +21,10 @@ public class OrderControllerImpl implements OrderController {
     public ResponseEntity<Void> save(CreateOrderRequest request) {
         service.save(request);
         return ResponseEntity.status(CREATED).build();
+    }
+
+    @Override
+    public ResponseEntity<OrderResponse> update(Long id, UpdateOrderRequest request) {
+        return ResponseEntity.ok().body(service.update(id, request));
     }
 }
