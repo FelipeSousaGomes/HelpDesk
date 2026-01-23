@@ -89,4 +89,27 @@ public interface OrderController {
             @NotNull(message = "Order id cannot be null")
             @Parameter(description = "Order id", required = true, example = "10")
             @PathVariable final Long id);
+
+    @Operation(summary = "Delete Order by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "No content",
+                    content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = OrderResponse.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class))
+            ),
+            @ApiResponse(responseCode = "404", description = "Not Found",
+                    content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class))
+
+            ),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class))
+            )
+    })
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity<Void> deleteById(
+            @NotNull(message = "Order id cannot be null")
+            @Parameter(description = "Order id", required = true, example = "10")
+            @PathVariable final Long id);
+
 }
