@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import models.exceptions.StandardError;
 import models.request.CreateOrderRequest;
 import models.request.UpdateOrderRequest;
@@ -66,4 +67,26 @@ public interface OrderController {
             @Parameter(description = "Update Order Request", required = true)
             @Valid @RequestBody final UpdateOrderRequest request
     );
+
+    @Operation(summary = "Find Order by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Order found",
+                    content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = OrderResponse.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class))
+            ),
+            @ApiResponse(responseCode = "404", description = "Not Found",
+                    content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class))
+
+            ),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class))
+            )
+    })
+    @GetMapping(value = "/{id}")
+    ResponseEntity<OrderResponse> findById(
+            @NotNull(message = "Order id cannot be null")
+            @Parameter(description = "Order id", required = true, example = "10")
+            @PathVariable final Long id);
 }

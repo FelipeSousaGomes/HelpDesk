@@ -1,6 +1,7 @@
 package br.com.felipe.oderserviceapi.controller.impl;
 
 import br.com.felipe.oderserviceapi.controller.OrderController;
+import br.com.felipe.oderserviceapi.mapper.OrderMapper;
 import br.com.felipe.oderserviceapi.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import models.request.CreateOrderRequest;
@@ -16,6 +17,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class OrderControllerImpl implements OrderController {
 
     private final OrderService service;
+    private final OrderMapper mapper;
 
     @Override
     public ResponseEntity<Void> save(CreateOrderRequest request) {
@@ -26,5 +28,10 @@ public class OrderControllerImpl implements OrderController {
     @Override
     public ResponseEntity<OrderResponse> update(Long id, UpdateOrderRequest request) {
         return ResponseEntity.ok().body(service.update(id, request));
+    }
+
+    @Override
+    public ResponseEntity<OrderResponse> findById(Long id) {
+        return ResponseEntity.ok().body(mapper.fromEntity(service.findById(id)));
     }
 }
