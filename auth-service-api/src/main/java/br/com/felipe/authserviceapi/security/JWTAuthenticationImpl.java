@@ -4,8 +4,9 @@ import br.com.felipe.authserviceapi.security.dtos.UserDetailsDTO;
 import br.com.felipe.authserviceapi.utils.JWTUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+
 import models.request.AuthenticateRequest;
-import models.request.AuthenticateResponse;
+import models.responses.AuthenticateResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

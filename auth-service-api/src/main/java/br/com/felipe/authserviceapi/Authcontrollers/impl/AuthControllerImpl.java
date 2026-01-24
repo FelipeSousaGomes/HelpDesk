@@ -6,9 +6,10 @@ import br.com.felipe.authserviceapi.services.RefreshTokenService;
 import br.com.felipe.authserviceapi.utils.JWTUtils;
 import lombok.RequiredArgsConstructor;
 import models.request.AuthenticateRequest;
-import models.request.AuthenticateResponse;
+
 import models.request.RefreshTokenRequest;
-import models.request.RefreshTokenResponse;
+import models.responses.AuthenticateResponse;
+import models.responses.RefreshTokenResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.web.bind.annotation.RestController;

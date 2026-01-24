@@ -7,7 +7,7 @@ import br.com.felipe.authserviceapi.utils.JWTUtils;
 import lombok.RequiredArgsConstructor;
 import models.exceptions.RefreshTokenExpired;
 import models.exceptions.ResourceNotFoundException;
-import models.request.RefreshTokenResponse;
+import models.responses.RefreshTokenResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
